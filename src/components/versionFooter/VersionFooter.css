@@ -1,0 +1,15 @@
+.VersionFooter__container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 65px;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.VersionFooter__text {
+  font-size: 1rem;
+  color: #383636;
+  margin-bottom: 6px;
+}
+
