@@ -7,12 +7,12 @@ import {
   Input,
   useToast,
 } from '@chakra-ui/react';
-import { Context } from '../../../context/store';
+import { Context } from '../../context/store';
 import { Heading } from '@chakra-ui/react';
-import AdminApi from '../../../api/admin.api';
+import AdminApi from '../../api/admin.api';
 import React, { useContext, useState } from 'react';
-import Separator from 'components/Separator';
-import admin2FAApi from '../../../api/admin2FA.api';
+import Separator from '../Separator';
+import admin2FAApi from '../../api/admin2FA.api';
 
 interface TwoFactorLoginProps {
   username: string;

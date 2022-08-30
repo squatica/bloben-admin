@@ -20,7 +20,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Context } from '../context/store';
-import { GetUsersResponse } from 'bloben-interface/admin/admin';
+import { GetUsersResponse } from '../bloben-interface/admin/admin';
 import AdminUsersApi from '../api/adminUsers.api';
 import React, { useContext, useState } from 'react';
 

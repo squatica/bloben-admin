@@ -16,8 +16,8 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Context } from '../context/store';
-import { GetUsersResponse } from 'bloben-interface/admin/admin';
-import { ROLE } from 'bloben-interface/enums';
+import { GetUsersResponse } from '../bloben-interface/admin/admin';
+import { ROLE } from '../bloben-interface/enums';
 import AdminUsersApi from '../api/adminUsers.api';
 import React, { useContext, useEffect, useState } from 'react';
 import Separator from '../components/Separator';

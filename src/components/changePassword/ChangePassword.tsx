@@ -11,11 +11,11 @@ import {
   InputRightElement,
   useToast,
 } from '@chakra-ui/react';
-import { CommonResponse } from 'data/interface';
+import { CommonResponse } from '../../data/interface';
 import { Context } from '../../context/store';
 import AdminApi from '../../api/admin.api';
 import React, { useContext, useState } from 'react';
-import Separator from 'components/Separator';
+import Separator from '../Separator';
 
 const ChangePassword = () => {
   const toast = useToast();

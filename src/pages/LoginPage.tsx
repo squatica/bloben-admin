@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios';
 import { Context } from '../context/store';
-import { LoginResponse } from 'bloben-interface/user/user';
+import { LoginResponse } from '../bloben-interface/user/user';
 import { getHostname } from '../utils/common';
 import { useToast } from '@chakra-ui/react';
 import AdminApi from '../api/admin.api';
 import LoginView from '../components/LoginView';
 import React, { useContext, useState } from 'react';
-import TwoFactorLogin from '../components/changePassword/2FA/TwoFactorLogin';
+import TwoFactorLogin from '../components/2FA/TwoFactorLogin';
 
 const LoginPage = () => {
   const toast = useToast();
@@ -29,7 +29,6 @@ const LoginPage = () => {
       setPassword(e.target.value);
     }
   };
-
   const handleLogin = async (): Promise<void> => {
     try {
       const apiUrl = `${getHostname()}/api`;

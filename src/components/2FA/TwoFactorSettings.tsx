@@ -1,9 +1,9 @@
 import { Button, Flex, Heading, useToast } from '@chakra-ui/react';
-import { Context } from '../../../context/store';
-import Admin2FAApi from '../../../api/admin2FA.api';
-import AdminApi from '../../../api/admin.api';
+import { Context } from '../../context/store';
+import Admin2FAApi from '../../api/admin2FA.api';
+import AdminApi from '../../api/admin.api';
 import React, { useContext, useState } from 'react';
-import Separator from 'components/Separator';
+import Separator from '../Separator';
 import TwoFactorSetup from './TwoFactorSetup';
 
 const TwoFactorSettings = () => {

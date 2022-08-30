@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import ChangePassword from '../components/changePassword/ChangePassword';
 import React from 'react';
 import Separator from '../components/Separator';
-import TwoFactorSettings from '../components/changePassword/2FA/TwoFactorSettings';
+import TwoFactorSettings from '../components/2FA/TwoFactorSettings';
 
 const SettingsPage = () => {
   return (

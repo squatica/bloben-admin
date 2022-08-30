@@ -8,14 +8,14 @@ import {
   Input,
   useToast,
 } from '@chakra-ui/react';
-import { Context } from '../../../context/store';
+import { Context } from '../../context/store';
 import { authenticator } from 'otplib';
-import Admin2FAApi from '../../../api/admin2FA.api';
-import AdminApi from '../../../api/admin.api';
-import ChakraModal from '../../chakraCustom/ChakraModal';
+import Admin2FAApi from '../../api/admin2FA.api';
+import AdminApi from '../../api/admin.api';
+import ChakraModal from '../chakraCustom/ChakraModal';
 import QRCode from 'qrcode';
 import React, { useContext, useEffect, useState } from 'react';
-import Separator from 'components/Separator';
+import Separator from '../Separator';
 
 interface TwoFactorSetupProps {
   handleClose: any;

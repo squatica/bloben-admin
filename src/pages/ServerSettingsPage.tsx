@@ -13,7 +13,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { CommonResponse } from 'data/interface';
+import { CommonResponse } from '../data/interface';
 import { Context } from '../context/store';
 import { LOCATION_PROVIDER } from '../bloben-interface/enums';
 import React, { useContext, useEffect, useState } from 'react';
