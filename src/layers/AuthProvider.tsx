@@ -53,9 +53,27 @@ const AuthProvider = () => {
     }
   };
 
+  const getAccount = async () => {
+    try {
+      const response = await AdminApi.getAdminAccount(store.token);
+
+      if (response.status === 200) {
+        setContext('user', response.data);
+      }
+    } catch (e: any) {
+      if (e.response?.data?.message) {
+        toast({
+          title: e.response?.data?.message,
+          status: 'error',
+        });
+      }
+    }
+  };
+
   // check login on load
   useEffect(() => {
     checkLogin();
+    getAccount();
   }, []);
 
   return (

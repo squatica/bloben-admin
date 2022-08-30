@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { Context } from '../context/store';
 import { GetUsersResponse } from 'bloben-interface/admin/admin';
-import AdminApi from '../api/admin.api';
+import AdminUsersApi from '../api/adminUsers.api';
 import React, { useContext, useState } from 'react';
 
 const renderUsers = (
@@ -119,7 +119,10 @@ const UsersView = (props: UsersViewProps) => {
     }
 
     try {
-      const response = await AdminApi.deleteUser(selectedUser.id, store.token);
+      const response = await AdminUsersApi.deleteUser(
+        selectedUser.id,
+        store.token
+      );
 
       toast({
         title: response?.data?.message,

@@ -16,6 +16,11 @@ const Reducer = (state: any, action: any) => {
         ...state,
         version: action.payload,
       };
+    case 'user':
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return state;
   }

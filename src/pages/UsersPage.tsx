@@ -18,7 +18,7 @@ import {
 import { Context } from '../context/store';
 import { GetUsersResponse } from 'bloben-interface/admin/admin';
 import { ROLE } from 'bloben-interface/enums';
-import AdminApi from '../api/admin.api';
+import AdminUsersApi from '../api/adminUsers.api';
 import React, { useContext, useEffect, useState } from 'react';
 import Separator from '../components/Separator';
 import UsersView from '../components/UsersView';
@@ -38,7 +38,7 @@ const UsersPage = () => {
   const getUsers = async (): Promise<void> => {
     try {
       const response: AxiosResponse<GetUsersResponse[]> =
-        await AdminApi.getUsers(store.token);
+        await AdminUsersApi.getUsers(store.token);
 
       if (response.data) {
         setUsers(response.data);
@@ -54,7 +54,7 @@ const UsersPage = () => {
   };
 
   const handleEnabledStatusChange = async (user: GetUsersResponse) => {
-    await AdminApi.updateUser(
+    await AdminUsersApi.updateUser(
       user.id,
       { isEnabled: !user.isEnabled, emailsAllowed: user.emailsAllowed },
       store.token
@@ -63,7 +63,7 @@ const UsersPage = () => {
   };
 
   const handleEmailsAllowedChange = async (user: GetUsersResponse) => {
-    await AdminApi.updateUser(
+    await AdminUsersApi.updateUser(
       user.id,
       { isEnabled: user.isEnabled, emailsAllowed: !user.emailsAllowed },
       store.token
@@ -72,7 +72,7 @@ const UsersPage = () => {
   };
 
   const handleChangeRole = async (user: GetUsersResponse, role: ROLE) => {
-    await AdminApi.updateUser(
+    await AdminUsersApi.updateUser(
       user.id,
       { role, isEnabled: user.isEnabled, emailsAllowed: user.emailsAllowed },
       store.token
@@ -95,7 +95,7 @@ const UsersPage = () => {
 
   const handleCreate = async (): Promise<void> => {
     try {
-      await AdminApi.createUser(
+      await AdminUsersApi.createUser(
         {
           username,
           password,

@@ -34,19 +34,27 @@ const Axios: any = {
 
     return response.json();
   },
-  post: async (path: string, data: any, token?: string) => {
+  post: async (path: string, data: Record<string, unknown>, token?: string) => {
     const URL: string = getBaseUrl() + path;
     return axios.post(URL, data, createConfig(token));
   },
-  patch: async (path: string, data: any, token?: string) => {
+  patch: async (
+    path: string,
+    data: Record<string, unknown>,
+    token?: string
+  ) => {
     const URL: string = getBaseUrl() + path;
     return axios.patch(URL, data, createConfig(token));
   },
-  put: async (path: string, data: any, token?: string) => {
+  put: async (path: string, data: Record<string, unknown>, token?: string) => {
     const URL: string = getBaseUrl() + path;
     return axios.put(URL, data, createConfig(token));
   },
-  delete: async (path: string, data: any, token?: string) => {
+  delete: async (
+    path: string,
+    data: Record<string, unknown>,
+    token?: string
+  ) => {
     const URL: string = getBaseUrl() + path;
     return axios.delete(URL, { ...createConfig(token), data });
   },

@@ -7,7 +7,7 @@ import Axios from '../lib/Axios';
 
 const V1_BASE_PATH = `/${APP_API_VERSION_1}/admin/logs`;
 
-const AdminApi = {
+const LogsApi = {
   getLogTags: async (token: string): Promise<AxiosResponse<string[]>> => {
     return Axios.get(`${V1_BASE_PATH}/tags`, token);
   },
@@ -29,4 +29,4 @@ const AdminApi = {
   },
 };
 
-export default AdminApi;
+export default LogsApi;
