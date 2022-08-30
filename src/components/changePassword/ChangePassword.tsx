@@ -12,14 +12,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { CommonResponse } from '../../data/interface';
-import { Context } from '../../context/store';
 import AdminApi from '../../api/admin.api';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Separator from '../Separator';
 
 const ChangePassword = () => {
   const toast = useToast();
-  const [store] = useContext(Context);
 
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -39,13 +37,10 @@ const ChangePassword = () => {
   const handleChangePassword = async () => {
     try {
       const response: AxiosResponse<CommonResponse> =
-        await AdminApi.changePassword(
-          {
-            oldPassword,
-            password,
-          },
-          store.token
-        );
+        await AdminApi.changePassword({
+          oldPassword,
+          password,
+        });
 
       if (response.status === 200) {
         toast({

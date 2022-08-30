@@ -55,9 +55,13 @@ const AuthProvider = () => {
 
   const getAccount = async () => {
     try {
-      const response = await AdminApi.getAdminAccount(store.token);
+      const response = await AdminApi.getAdminAccount();
 
       if (response.status === 200) {
+        if (response.data?.isLogged) {
+          setContext('isLogged', true);
+        }
+
         setContext('user', response.data);
       }
     } catch (e: any) {

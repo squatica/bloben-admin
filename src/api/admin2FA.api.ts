@@ -11,7 +11,7 @@ import {
 
 import Axios, { config } from '../lib/Axios';
 
-const V1_BASE_PATH = `/${APP_API_VERSION_1}/admin/user/2fa`;
+const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/user/2fa`;
 
 const AdminApi = {
   loginWith2FA: async (
@@ -19,19 +19,16 @@ const AdminApi = {
   ): Promise<AxiosResponse<LoginWithTwoFactorAdminResponse>> => {
     return Axios.post(`${V1_BASE_PATH}/login`, data, config);
   },
-  generate2FA: async (
-    token: string
-  ): Promise<AxiosResponse<GetTwoFactorSecretResponse>> => {
-    return Axios.post(`${V1_BASE_PATH}`, {}, token);
+  generate2FA: async (): Promise<AxiosResponse<GetTwoFactorSecretResponse>> => {
+    return Axios.post(`${V1_BASE_PATH}`, {});
   },
-  delete2FA: async (token: string): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.delete(`${V1_BASE_PATH}`, {}, token);
+  delete2FA: async (): Promise<AxiosResponse<CommonResponse>> => {
+    return Axios.delete(`${V1_BASE_PATH}`, {});
   },
   enable2FA: async (
-    data: EnableTwoFactorRequest,
-    token: string
+    data: EnableTwoFactorRequest
   ): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.post(`${V1_BASE_PATH}/enable`, data, token);
+    return Axios.post(`${V1_BASE_PATH}/enable`, data);
   },
 };
 

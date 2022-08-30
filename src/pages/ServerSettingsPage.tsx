@@ -14,20 +14,18 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { CommonResponse } from '../data/interface';
-import { Context } from '../context/store';
 import { LOCATION_PROVIDER } from '../bloben-interface/enums';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Separator from '../components/Separator';
 import ServerSettingsApi from '../api/serverSettings.api';
 
 const ServerSettingsPage = () => {
   const toast = useToast();
-  const [store] = useContext(Context);
 
   const [serverSettings, setServerSettings] = useState<any>({});
 
   const getServerSettings = async () => {
-    const response = await ServerSettingsApi.get(store.token);
+    const response = await ServerSettingsApi.get();
 
     if (response.status === 200) {
       setServerSettings(response.data);
@@ -41,7 +39,7 @@ const ServerSettingsPage = () => {
   const handleChangeCheckNewVersion = async () => {
     try {
       const response: AxiosResponse<CommonResponse> =
-        await ServerSettingsApi.patch(store.token, {
+        await ServerSettingsApi.patch({
           checkNewVersion: !serverSettings.checkNewVersion,
         });
 
@@ -63,7 +61,7 @@ const ServerSettingsPage = () => {
   const handleChangeLocationProvider = async (value: LOCATION_PROVIDER) => {
     try {
       const response: AxiosResponse<CommonResponse> =
-        await ServerSettingsApi.patch(store.token, {
+        await ServerSettingsApi.patch({
           locationProvider: value,
         });
 
@@ -85,7 +83,7 @@ const ServerSettingsPage = () => {
   const handleChangeEmailCounter = async (e: any) => {
     try {
       const response: AxiosResponse<CommonResponse> =
-        await ServerSettingsApi.patch(store.token, {
+        await ServerSettingsApi.patch({
           emailCounter: e.target.value,
         });
 

@@ -10,31 +10,30 @@ import { CommonResponse } from '../data/interface';
 import { LoginResponse } from '../bloben-interface/user/user';
 import Axios, { config } from '../lib/Axios';
 
-const V1_BASE_PATH = `/${APP_API_VERSION_1}/admin/user`;
+const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/user`;
 
 const AdminApi = {
   login: async (
     url: string,
     data: AdminLoginRequest
   ): Promise<AxiosResponse<LoginResponse>> => {
-    return axios.post(`${url}/v1/admin/user/login`, data, config);
+    return axios.post(`${url}/admin/v1/user/login`, data, config);
   },
   changePassword: async (
-    data: AdminChangePasswordRequest,
-    token: string
+    data: AdminChangePasswordRequest
   ): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.post(`${V1_BASE_PATH}/change-password`, data, token);
+    return Axios.post(`${V1_BASE_PATH}/change-password`, data);
   },
-  logout: async (token: string): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.get(`${V1_BASE_PATH}/logout`, token);
+  logout: async (): Promise<AxiosResponse<CommonResponse>> => {
+    return Axios.get(`${V1_BASE_PATH}/logout`);
   },
-  getAdminAccount: async (
-    token: string
-  ): Promise<AxiosResponse<GetAdminAccountResponse>> => {
-    return Axios.get(`${V1_BASE_PATH}`, token);
+  getAdminAccount: async (): Promise<
+    AxiosResponse<GetAdminAccountResponse>
+  > => {
+    return Axios.get(`${V1_BASE_PATH}`);
   },
   getVersion: async () => {
-    return Axios.get(`/v1/version`);
+    return Axios.get(`/app/v1/version`);
   },
 };
 

@@ -20,13 +20,13 @@ const TwoFactorSettings = () => {
 
   const handleDisable2FA = async () => {
     try {
-      const response = await Admin2FAApi.delete2FA(store.token);
+      const response = await Admin2FAApi.delete2FA();
 
       toast({
         title: response?.data?.message,
       });
 
-      const userResponse = await AdminApi.getAdminAccount(store.token);
+      const userResponse = await AdminApi.getAdminAccount();
 
       setContext('user', userResponse.data);
     } catch (e: any) {

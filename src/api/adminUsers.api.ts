@@ -8,32 +8,23 @@ import {
 import { CommonResponse } from '../data/interface';
 import Axios from '../lib/Axios';
 
-const V1_BASE_PATH = `/${APP_API_VERSION_1}/admin/users`;
+const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/users`;
 
 const AdminUsersApi = {
-  getUsers: async (
-    token: string
-  ): Promise<AxiosResponse<GetUsersResponse[]>> => {
-    return Axios.get(`${V1_BASE_PATH}`, token);
+  getUsers: async (): Promise<AxiosResponse<GetUsersResponse[]>> => {
+    return Axios.get(`${V1_BASE_PATH}`);
   },
-  createUser: async (
-    data: any,
-    token: string
-  ): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.post(`${V1_BASE_PATH}`, data, token);
+  createUser: async (data: any): Promise<AxiosResponse<CommonResponse>> => {
+    return Axios.post(`${V1_BASE_PATH}`, data);
   },
   updateUser: async (
     id: string,
-    data: AdminUpdateUserRequest,
-    token: string
+    data: AdminUpdateUserRequest
   ): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.patch(`${V1_BASE_PATH}/${id}`, data, token);
+    return Axios.patch(`${V1_BASE_PATH}/${id}`, data);
   },
-  deleteUser: async (
-    id: string,
-    token: string
-  ): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.delete(`${V1_BASE_PATH}/${id}`, undefined, token);
+  deleteUser: async (id: string): Promise<AxiosResponse<CommonResponse>> => {
+    return Axios.delete(`${V1_BASE_PATH}/${id}`);
   },
 };
 

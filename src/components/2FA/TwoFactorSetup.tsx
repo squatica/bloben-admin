@@ -44,7 +44,7 @@ const TwoFactorSetup = (props: TwoFactorSetupProps) => {
       return;
     }
     try {
-      const response = await Admin2FAApi.generate2FA(store.token);
+      const response = await Admin2FAApi.generate2FA();
 
       if (response.status === 200) {
         setSecret(response.data.twoFactorSecret);
@@ -71,19 +71,16 @@ const TwoFactorSetup = (props: TwoFactorSetupProps) => {
   };
 
   const reloadUser = async () => {
-    const userResponse = await AdminApi.getAdminAccount(store.token);
+    const userResponse = await AdminApi.getAdminAccount();
 
     setContext('user', userResponse.data);
   };
 
   const handleEnable2FA = async () => {
     try {
-      const response = await Admin2FAApi.enable2FA(
-        {
-          otpCode,
-        },
-        store.token
-      );
+      const response = await Admin2FAApi.enable2FA({
+        otpCode,
+      });
 
       toast({
         title: response?.data?.message,

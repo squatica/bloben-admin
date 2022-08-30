@@ -8,14 +8,12 @@ export const Context: any = createContext();
 interface InitialContext {
   isLogged: boolean;
   version: string | null;
-  token: string;
   user: GetAdminAccountResponse | null;
 }
 
 const initialContext: InitialContext = {
   isLogged: false,
   version: null,
-  token: '',
   user: null,
 };
 

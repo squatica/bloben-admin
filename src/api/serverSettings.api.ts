@@ -9,17 +9,16 @@ import {
 } from '../bloben-interface/serverSettings/serverSettings';
 import Axios from '../lib/Axios';
 
-const V1_BASE_PATH = `/${APP_API_VERSION_1}/admin`;
+const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}`;
 
 const ServerSettingsApi = {
-  get: async (token: string): Promise<AxiosResponse<GetServerSettings>> => {
-    return Axios.get(`${V1_BASE_PATH}/server-settings`, token);
+  get: async (): Promise<AxiosResponse<GetServerSettings>> => {
+    return Axios.get(`${V1_BASE_PATH}/server-settings`);
   },
   patch: async (
-    token: string,
     data: PatchServerSettings
   ): Promise<AxiosResponse<CommonResponse>> => {
-    return Axios.patch(`${V1_BASE_PATH}/server-settings`, data, token);
+    return Axios.patch(`${V1_BASE_PATH}/server-settings`, data);
   },
 };
 

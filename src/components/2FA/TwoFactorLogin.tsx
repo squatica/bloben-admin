@@ -44,12 +44,7 @@ const TwoFactorLogin = (props: TwoFactorLoginProps) => {
       });
 
       if (response.data.isLogged && response.data.isTwoFactorEnabled) {
-        // @ts-ignore
-        setContext('token', response.data.token);
-        const userResponse = await AdminApi.getAdminAccount(
-          // @ts-ignore
-          response.data?.token
-        );
+        const userResponse = await AdminApi.getAdminAccount();
 
         setContext('user', userResponse.data);
 

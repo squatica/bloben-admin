@@ -15,17 +15,14 @@ import {
   ModalOverlay,
   useToast,
 } from '@chakra-ui/react';
-import { Context } from '../context/store';
 import { GetUsersResponse } from '../bloben-interface/admin/admin';
 import { ROLE } from '../bloben-interface/enums';
 import AdminUsersApi from '../api/adminUsers.api';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Separator from '../components/Separator';
 import UsersView from '../components/UsersView';
 
 const UsersPage = () => {
-  const [store] = useContext(Context);
-
   const toast = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState<GetUsersResponse[]>([]);
@@ -38,7 +35,7 @@ const UsersPage = () => {
   const getUsers = async (): Promise<void> => {
     try {
       const response: AxiosResponse<GetUsersResponse[]> =
-        await AdminUsersApi.getUsers(store.token);
+        await AdminUsersApi.getUsers();
 
       if (response.data) {
         setUsers(response.data);
@@ -54,29 +51,27 @@ const UsersPage = () => {
   };
 
   const handleEnabledStatusChange = async (user: GetUsersResponse) => {
-    await AdminUsersApi.updateUser(
-      user.id,
-      { isEnabled: !user.isEnabled, emailsAllowed: user.emailsAllowed },
-      store.token
-    );
+    await AdminUsersApi.updateUser(user.id, {
+      isEnabled: !user.isEnabled,
+      emailsAllowed: user.emailsAllowed,
+    });
     await getUsers();
   };
 
   const handleEmailsAllowedChange = async (user: GetUsersResponse) => {
-    await AdminUsersApi.updateUser(
-      user.id,
-      { isEnabled: user.isEnabled, emailsAllowed: !user.emailsAllowed },
-      store.token
-    );
+    await AdminUsersApi.updateUser(user.id, {
+      isEnabled: user.isEnabled,
+      emailsAllowed: !user.emailsAllowed,
+    });
     await getUsers();
   };
 
   const handleChangeRole = async (user: GetUsersResponse, role: ROLE) => {
-    await AdminUsersApi.updateUser(
-      user.id,
-      { role, isEnabled: user.isEnabled, emailsAllowed: user.emailsAllowed },
-      store.token
-    );
+    await AdminUsersApi.updateUser(user.id, {
+      role,
+      isEnabled: user.isEnabled,
+      emailsAllowed: user.emailsAllowed,
+    });
     await getUsers();
   };
 
@@ -95,13 +90,10 @@ const UsersPage = () => {
 
   const handleCreate = async (): Promise<void> => {
     try {
-      await AdminUsersApi.createUser(
-        {
-          username,
-          password,
-        },
-        store.token
-      );
+      await AdminUsersApi.createUser({
+        username,
+        password,
+      });
 
       setIsModalOpen(false);
       getUsers();
