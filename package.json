@@ -53,7 +53,7 @@
   "scripts": {
     "prepare": "npx husky install && npx husky add .husky/pre-commit \"npm run lint\"",
     "start": "VITE_APP_NODE_ENV=development vite",
-    "build": "tsc && vite build --base=/admin",
+    "build": "tsc && vite build --base=/admin/",
     "preview": "vite preview",
     "compile": "tsc",
     "lint": "eslint . --ext ts --ext tsx"
