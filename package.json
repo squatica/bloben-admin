@@ -13,7 +13,7 @@
     "url": "https://github.com/nibdo/bloben-admin"
   },
   "dependencies": {
-    "@chakra-ui/react": "2.2.1",
+    "@chakra-ui/react": "2.3.1",
     "@emotion/react": "11.9.3",
     "@emotion/styled": "11.9.3",
     "axios": "0.27.2",
@@ -53,7 +53,7 @@
   "scripts": {
     "prepare": "npx husky install && npx husky add .husky/pre-commit \"npm run lint\"",
     "start": "VITE_APP_NODE_ENV=development vite",
-    "build": "tsc && vite build --base=/admin",
+    "build": "tsc && vite build --base=/admin/",
     "preview": "vite preview",
     "compile": "tsc",
     "lint": "eslint . --ext ts --ext tsx"

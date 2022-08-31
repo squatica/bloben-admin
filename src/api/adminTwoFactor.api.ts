@@ -11,7 +11,7 @@ import {
 
 import Axios, { config } from '../lib/Axios';
 
-const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/user/2fa`;
+const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/auth/two-factor`;
 
 const AdminApi = {
   loginWith2FA: async (

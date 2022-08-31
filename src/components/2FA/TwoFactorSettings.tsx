@@ -1,8 +1,19 @@
-import { Button, Flex, Heading, useToast } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Button,
+  Flex,
+  Heading,
+  useToast,
+} from '@chakra-ui/react';
 import { Context } from '../../context/store';
-import Admin2FAApi from '../../api/admin2FA.api';
+import Admin2FAApi from '../../api/adminTwoFactor.api';
 import AdminApi from '../../api/admin.api';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Separator from '../Separator';
 import TwoFactorSetup from './TwoFactorSetup';
 
@@ -17,6 +28,7 @@ const TwoFactorSettings = () => {
   const { user } = store;
 
   const [setupOpen, openSetup] = useState(false);
+  const [deleteModalVisible, openDeleteModal] = useState(false);
 
   const handleDisable2FA = async () => {
     try {
@@ -25,6 +37,8 @@ const TwoFactorSettings = () => {
       toast({
         title: response?.data?.message,
       });
+
+      openDeleteModal(false);
 
       const userResponse = await AdminApi.getAdminAccount();
 
@@ -39,6 +53,8 @@ const TwoFactorSettings = () => {
     }
   };
 
+  const leastDestructiveRef = useRef(null);
+
   return (
     <Flex direction={'column'} maxWidth={'50%'}>
       <Heading>Two factor authentication</Heading>
@@ -48,7 +64,7 @@ const TwoFactorSettings = () => {
           _focus={{ boxShadow: 'none' }}
           h="1.75rem"
           size="sm"
-          onClick={handleDisable2FA}
+          onClick={() => openDeleteModal(true)}
         >
           Disable 2FA
         </Button>
@@ -65,6 +81,43 @@ const TwoFactorSettings = () => {
       {setupOpen ? (
         <TwoFactorSetup handleClose={() => openSetup(false)} />
       ) : null}
+
+      <AlertDialog
+        isOpen={deleteModalVisible}
+        onClose={() => openDeleteModal(false)}
+        leastDestructiveRef={leastDestructiveRef}
+        isCentered={true}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Two factor authentication
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Do you want to disable two factor authentication?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button
+                ref={leastDestructiveRef}
+                _focus={{ boxShadow: 'none' }}
+                onClick={() => openDeleteModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                _focus={{ boxShadow: 'none' }}
+                colorScheme="red"
+                onClick={handleDisable2FA}
+                ml={3}
+              >
+                Disable
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Flex>
   );
 };
