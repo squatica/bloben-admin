@@ -10,14 +10,14 @@ import { CommonResponse } from '../data/interface';
 import { LoginResponse } from '../bloben-interface/user/user';
 import Axios, { config } from '../lib/Axios';
 
-const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/user`;
+const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/auth`;
 
 const AdminApi = {
   login: async (
     url: string,
     data: AdminLoginRequest
   ): Promise<AxiosResponse<LoginResponse>> => {
-    return axios.post(`${url}/admin/v1/user/login`, data, config);
+    return axios.post(`${url}/admin/v1/auth/login`, data, config);
   },
   changePassword: async (
     data: AdminChangePasswordRequest
