@@ -1,17 +1,19 @@
 import { AxiosResponse } from 'axios';
 import { Context } from '../context/store';
-import { LoginResponse } from 'bloben-interface/user/user';
+import { LoginResponse } from '../bloben-interface/user/user';
 import { getHostname } from '../utils/common';
 import { useToast } from '@chakra-ui/react';
 import AdminApi from '../api/admin.api';
 import LoginView from '../components/LoginView';
 import React, { useContext, useState } from 'react';
+import TwoFactorLogin from '../components/2FA/TwoFactorLogin';
 
 const LoginPage = () => {
   const toast = useToast();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [twoFactorVisible, setTwoFactorVisible] = useState(false);
 
   const [, dispatch] = useContext(Context);
 
@@ -27,7 +29,6 @@ const LoginPage = () => {
       setPassword(e.target.value);
     }
   };
-
   const handleLogin = async (): Promise<void> => {
     try {
       const apiUrl = `${getHostname()}/api`;
@@ -46,9 +47,13 @@ const LoginPage = () => {
       );
 
       if (response.data.isLogged && !response.data.isTwoFactorEnabled) {
-        // @ts-ignore
-        setContext('token', response.data.token);
+        const userResponse = await AdminApi.getAdminAccount();
+
+        setContext('user', userResponse.data);
+
         setContext('isLogged', true);
+      } else if (response?.data?.isTwoFactorEnabled) {
+        setTwoFactorVisible(true);
       }
     } catch (e: any) {
       if (e.response?.data?.message) {
@@ -60,7 +65,9 @@ const LoginPage = () => {
     }
   };
 
-  return (
+  return twoFactorVisible ? (
+    <TwoFactorLogin username={username} password={password} />
+  ) : (
     <LoginView
       username={username}
       password={password}

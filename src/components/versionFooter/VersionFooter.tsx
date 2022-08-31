@@ -10,9 +10,9 @@ const VersionFooter = () => {
 
   return (
     <div className={'VersionFooter__container'}>
-      <p
-        className={'VersionFooter__text'}
-      >{`Version ${process.env.REACT_APP_VERSION}`}</p>
+      <p className={'VersionFooter__text'}>{`Version ${
+        import.meta.env.VITE_APP_VERSION
+      }`}</p>
       {version ? (
         <p className={'VersionFooter__text'}>{`Api version ${version}`}</p>
       ) : null}

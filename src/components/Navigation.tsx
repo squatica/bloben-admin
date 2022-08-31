@@ -23,16 +23,14 @@ const Navigation = () => {
   const navigateTo = (path: APP_PATH) => {
     navigate(`/admin/${path}`);
   };
-  const [store, dispatch] = useContext(Context);
+  const [, dispatch] = useContext(Context);
 
   const setContext = (type: string, payload: any) => {
     dispatch({ type, payload });
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleLogout = async () => {
-    const response: AxiosResponse<CommonResponse> = await AdminApi.logout(
-      store.token
-    );
+    const response: AxiosResponse<CommonResponse> = await AdminApi.logout();
 
     if (response.status === 200) {
       setContext('isLogged', false);

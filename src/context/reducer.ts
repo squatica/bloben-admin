@@ -6,15 +6,15 @@ const Reducer = (state: any, action: any) => {
         ...state,
         isLogged: action.payload,
       };
-    case 'token':
-      return {
-        ...state,
-        token: action.payload,
-      };
     case 'version':
       return {
         ...state,
         version: action.payload,
+      };
+    case 'user':
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;

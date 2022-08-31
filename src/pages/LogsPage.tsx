@@ -16,10 +16,9 @@ import {
   Tr,
   useToast,
 } from '@chakra-ui/react';
-import { Context } from '../context/store';
 import { Log } from '../data/interface';
 import LogsApi from '../api/logs.api';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Separator from '../components/Separator';
 
 const renderTags = (
@@ -87,8 +86,6 @@ const renderLogs = (logs: any) => {
 };
 
 const LogsPage = () => {
-  const [store] = useContext(Context);
-
   const toast = useToast();
   const [tags, setTags] = useState<string[]>([]);
   const [selectedTags, selectTags] = useState<string[]>([]);
@@ -100,9 +97,7 @@ const LogsPage = () => {
 
   const getLogTags = async (): Promise<void> => {
     try {
-      const response: AxiosResponse<string[]> = await LogsApi.getLogTags(
-        store.token
-      );
+      const response: AxiosResponse<string[]> = await LogsApi.getLogTags();
 
       if (response.data) {
         setTags(response.data);
@@ -119,9 +114,7 @@ const LogsPage = () => {
 
   const getLogDates = async (): Promise<void> => {
     try {
-      const response: AxiosResponse<string[]> = await LogsApi.getLogDates(
-        store.token
-      );
+      const response: AxiosResponse<string[]> = await LogsApi.getLogDates();
 
       if (response.data) {
         setDates(response.data);
@@ -141,7 +134,6 @@ const LogsPage = () => {
     setLogs([]);
     try {
       const response = await LogsApi.getLogs(
-        store.token,
         selectedDate,
         logLevel,
         selectedTags.length ? JSON.stringify(selectedTags) : null

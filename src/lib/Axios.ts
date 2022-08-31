@@ -3,20 +3,22 @@ import axios from 'axios';
 const headers: any = {
   credentials: 'same-origin',
   'Content-Type': 'application/json',
+  withCredentials: true,
 };
 
 export const config: any = {
-  timeout: 5000,
+  timeout: 30000,
   headers,
+  withCredentials: true,
 };
 
-const createConfig = (token?: string) => {
+const createConfig = () => {
   return {
-    timeout: 5000,
+    timeout: 30000,
     headers: {
       ...headers,
-      token,
     },
+    withCredentials: true,
   };
 };
 
@@ -24,31 +26,31 @@ const createConfig = (token?: string) => {
 const getBaseUrl = () => window.env.apiUrl;
 
 const Axios: any = {
-  get: async (path: string, token?: string) => {
+  get: async (path: string) => {
     const URL: string = getBaseUrl() + path;
-    return axios.get(URL, createConfig(token));
+    return axios.get(URL, createConfig());
   },
-  getJSON: async (path: string, token?: string) => {
+  getJSON: async (path: string) => {
     const URL: string = getBaseUrl() + path;
-    const response: any = await axios.get(URL, createConfig(token));
+    const response: any = await axios.get(URL, createConfig());
 
     return response.json();
   },
-  post: async (path: string, data: any, token?: string) => {
+  post: async (path: string, data: Record<string, unknown>) => {
     const URL: string = getBaseUrl() + path;
-    return axios.post(URL, data, createConfig(token));
+    return axios.post(URL, data, createConfig());
   },
-  patch: async (path: string, data: any, token?: string) => {
+  patch: async (path: string, data: Record<string, unknown>) => {
     const URL: string = getBaseUrl() + path;
-    return axios.patch(URL, data, createConfig(token));
+    return axios.patch(URL, data, createConfig());
   },
-  put: async (path: string, data: any, token?: string) => {
+  put: async (path: string, data: Record<string, unknown>) => {
     const URL: string = getBaseUrl() + path;
-    return axios.put(URL, data, createConfig(token));
+    return axios.put(URL, data, createConfig());
   },
-  delete: async (path: string, data: any, token?: string) => {
+  delete: async (path: string, data: Record<string, unknown>) => {
     const URL: string = getBaseUrl() + path;
-    return axios.delete(URL, { ...createConfig(token), data });
+    return axios.delete(URL, { ...createConfig(), data });
   },
 };
 

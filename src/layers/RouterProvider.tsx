@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import LogsPage from '../pages/LogsPage';
 import React from 'react';
 import ServerSettingsPage from '../pages/ServerSettingsPage';
-import SettingsPage from 'pages/SettingsPage';
+import SettingsPage from '../pages/SettingsPage';
 import UsersPage from '../pages/UsersPage';
 
 const RouterProvider = () => {
