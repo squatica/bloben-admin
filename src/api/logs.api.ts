@@ -5,17 +5,16 @@ import { APP_API_VERSION_1 } from '../data/constants';
 import { Log } from '../data/interface';
 import Axios from '../lib/Axios';
 
-const V1_BASE_PATH = `/${APP_API_VERSION_1}/admin/logs`;
+const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/logs`;
 
-const AdminApi = {
-  getLogTags: async (token: string): Promise<AxiosResponse<string[]>> => {
-    return Axios.get(`${V1_BASE_PATH}/tags`, token);
+const LogsApi = {
+  getLogTags: async (): Promise<AxiosResponse<string[]>> => {
+    return Axios.get(`${V1_BASE_PATH}/tags`);
   },
-  getLogDates: async (token: string): Promise<AxiosResponse<string[]>> => {
-    return Axios.get(`${V1_BASE_PATH}/dates`, token);
+  getLogDates: async (): Promise<AxiosResponse<string[]>> => {
+    return Axios.get(`${V1_BASE_PATH}/dates`);
   },
   getLogs: async (
-    token: string,
     date: string,
     level: string,
     tags: string | null
@@ -23,10 +22,9 @@ const AdminApi = {
     return Axios.get(
       `${V1_BASE_PATH}?date=${date}&level=${level}${
         tags !== null ? `&tags=${tags}` : ''
-      }`,
-      token
+      }`
     );
   },
 };
 
-export default AdminApi;
+export default LogsApi;
