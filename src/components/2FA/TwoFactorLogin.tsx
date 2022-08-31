@@ -12,7 +12,7 @@ import { Heading } from '@chakra-ui/react';
 import AdminApi from '../../api/admin.api';
 import React, { useContext, useState } from 'react';
 import Separator from '../Separator';
-import admin2FAApi from '../../api/admin2FA.api';
+import admin2FAApi from '../../api/adminTwoFactor.api';
 
 interface TwoFactorLoginProps {
   username: string;

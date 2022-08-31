@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { Context } from '../../context/store';
 import { authenticator } from 'otplib';
-import Admin2FAApi from '../../api/admin2FA.api';
+import Admin2FAApi from '../../api/adminTwoFactor.api';
 import AdminApi from '../../api/admin.api';
 import ChakraModal from '../chakraCustom/ChakraModal';
 import QRCode from 'qrcode';
