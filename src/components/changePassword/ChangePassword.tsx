@@ -2,19 +2,17 @@ import { AxiosResponse } from 'axios';
 import {
   Button,
   Center,
-  Flex,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   InputGroup,
   InputRightElement,
   useToast,
 } from '@chakra-ui/react';
 import { CommonResponse } from '../../data/interface';
+import { PrimaryButton, Separator, createToastError } from 'bloben-components';
 import AdminApi from '../../api/admin.api';
 import React, { useState } from 'react';
-import Separator from '../Separator';
 
 const ChangePassword = () => {
   const toast = useToast();
@@ -49,18 +47,13 @@ const ChangePassword = () => {
       }
     } catch (e: any) {
       if (e.response?.data?.message) {
-        toast({
-          title: e.response?.data?.message,
-          status: 'error',
-        });
+        toast(createToastError(e));
       }
     }
   };
 
   return (
-    <Flex direction={'column'} maxWidth={'50%'}>
-      <Heading>Change password</Heading>
-      <Separator height={24} />
+    <>
       <FormControl id="username" size="2xl">
         <FormLabel size="2xl">Current password</FormLabel>
         <Input
@@ -94,11 +87,9 @@ const ChangePassword = () => {
       </FormControl>
       <Separator height={40} />
       <Center>
-        <Button onClick={handleChangePassword} colorScheme="teal" size="md">
-          Confirm
-        </Button>
+        <PrimaryButton onClick={handleChangePassword}>Confirm</PrimaryButton>
       </Center>
-    </Flex>
+    </>
   );
 };
 

@@ -1,13 +1,13 @@
 import { AxiosResponse } from 'axios';
-
-import { APP_API_VERSION_1 } from '../data/constants';
-import { CommonResponse } from '../data/interface';
 import {
   EnableTwoFactorRequest,
   GetTwoFactorSecretResponse,
   LoginWithTwoFactorAdminResponse,
   LoginWithTwoFactorRequest,
-} from '../bloben-interface/2fa/2fa';
+} from 'bloben-interface';
+
+import { APP_API_VERSION_1 } from '../data/constants';
+import { CommonResponse } from '../data/interface';
 
 import Axios, { config } from '../lib/Axios';
 

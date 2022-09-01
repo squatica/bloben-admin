@@ -17,9 +17,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Log } from '../data/interface';
+import { Separator } from 'bloben-components';
 import LogsApi from '../api/logs.api';
 import React, { useEffect, useState } from 'react';
-import Separator from '../components/Separator';
 
 const renderTags = (
   tags: string[],

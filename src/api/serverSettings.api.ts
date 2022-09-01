@@ -1,12 +1,10 @@
 import { AxiosResponse } from 'axios';
+import { GetServerSettings, PatchServerSettings } from 'bloben-interface';
 
 import { APP_API_VERSION_1 } from '../data/constants';
 
 import { CommonResponse } from '../data/interface';
-import {
-  GetServerSettings,
-  PatchServerSettings,
-} from '../bloben-interface/serverSettings/serverSettings';
+
 import Axios from '../lib/Axios';
 
 const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}`;

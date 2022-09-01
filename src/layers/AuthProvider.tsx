@@ -44,12 +44,7 @@ const AuthProvider = () => {
     try {
       await getVersion();
     } catch (e: any) {
-      if (e.response?.data?.message) {
-        toast({
-          title: e.response?.data?.message,
-          status: 'error',
-        });
-      }
+      return;
     }
   };
 
@@ -65,12 +60,7 @@ const AuthProvider = () => {
         setContext('user', response.data);
       }
     } catch (e: any) {
-      if (e.response?.data?.message) {
-        toast({
-          title: e.response?.data?.message,
-          status: 'error',
-        });
-      }
+      return;
     }
   };
 

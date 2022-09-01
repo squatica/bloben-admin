@@ -1,21 +1,18 @@
 import {
-  Button,
   Center,
   Flex,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   useToast,
 } from '@chakra-ui/react';
+import { ChakraModal, PrimaryButton, Separator } from 'bloben-components';
 import { Context } from '../../context/store';
 import { authenticator } from 'otplib';
 import Admin2FAApi from '../../api/adminTwoFactor.api';
 import AdminApi from '../../api/admin.api';
-import ChakraModal from '../chakraCustom/ChakraModal';
 import QRCode from 'qrcode';
 import React, { useContext, useEffect, useState } from 'react';
-import Separator from '../Separator';
 
 interface TwoFactorSetupProps {
   handleClose: any;
@@ -104,10 +101,8 @@ const TwoFactorSetup = (props: TwoFactorSetupProps) => {
   }, []);
 
   return (
-    <ChakraModal handleClose={handleClose}>
+    <ChakraModal handleClose={handleClose} title={'Two factor authentication'}>
       <Flex direction={'column'} padding={8}>
-        <Heading>Two factor authentication</Heading>
-        <Separator height={24} />
         {qr?.length > 0 ? <img src={qr} alt={'qr'} /> : null}
         <FormControl id="username" size="2xl">
           <FormLabel size="2xl">OTP code</FormLabel>
@@ -120,9 +115,7 @@ const TwoFactorSetup = (props: TwoFactorSetupProps) => {
         </FormControl>
         <Separator height={40} />
         <Center>
-          <Button onClick={handleEnable2FA} colorScheme="teal" size="md">
-            Submit
-          </Button>
+          <PrimaryButton onClick={handleEnable2FA}>Submit</PrimaryButton>
         </Center>
       </Flex>
     </ChakraModal>

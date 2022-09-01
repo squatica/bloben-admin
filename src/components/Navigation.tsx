@@ -3,10 +3,10 @@ import { AxiosResponse } from 'axios';
 import { Button } from '@chakra-ui/react';
 import { CommonResponse } from '../data/interface';
 import { Context } from '../context/store';
+import { EvaIcons, Separator, SettingsButton } from 'bloben-components';
 import { useNavigate } from 'react-router';
 import AdminApi from '../api/admin.api';
-import React, { useContext } from 'react';
-import Separator from './Separator';
+import React, { useContext, useState } from 'react';
 
 const navigationStyle: any = {
   display: 'flex',
@@ -18,9 +18,11 @@ const navigationStyle: any = {
 };
 
 const Navigation = () => {
+  const [currentPath, setCurrentPath] = useState(APP_PATH.USERS);
   const navigate = useNavigate();
 
   const navigateTo = (path: APP_PATH) => {
+    setCurrentPath(path);
     navigate(`/admin/${path}`);
   };
   const [, dispatch] = useContext(Context);
@@ -39,47 +41,52 @@ const Navigation = () => {
 
   return (
     <div style={navigationStyle}>
-      <Button
+      <SettingsButton
         onClick={() => {
           navigateTo(APP_PATH.USERS);
         }}
-        colorScheme="teal"
-      >
-        Users
-      </Button>
-      <Separator height={16} />
-      <Button
+        icon={() => <EvaIcons.Person />}
+        text={'Users'}
+        path={APP_PATH.USERS}
+        selected={currentPath}
+      />
+      <Separator height={8} />
+      <SettingsButton
         onClick={() => {
           navigateTo(APP_PATH.LOGS);
         }}
-        colorScheme="teal"
-      >
-        Logs
-      </Button>
-      <Separator height={16} />
-      <Button
+        icon={() => <EvaIcons.Document />}
+        text={'Logs'}
+        path={APP_PATH.LOGS}
+        selected={currentPath}
+      />
+      <Separator height={8} />
+      <SettingsButton
         onClick={() => {
           navigateTo(APP_PATH.SETTINGS);
         }}
-        colorScheme="teal"
-      >
-        Admin Settings
-      </Button>
-      <Separator height={16} />
-      <Button
+        icon={() => <EvaIcons.Edit />}
+        text={'Admin Settings'}
+        path={APP_PATH.SETTINGS}
+        selected={currentPath}
+      />
+      <Separator height={8} />
+      <SettingsButton
         onClick={() => {
           navigateTo(APP_PATH.SERVER_SETTINGS);
         }}
-        colorScheme="teal"
-      >
-        Server settings
-      </Button>
+        icon={() => <EvaIcons.Settings />}
+        text={'Server Settings'}
+        path={APP_PATH.SERVER_SETTINGS}
+        selected={currentPath}
+      />
       <Separator height={40} />
       <Button
         onClick={() => {
           handleLogout();
         }}
         colorScheme="gray"
+        size={'sm'}
       >
         Log out
       </Button>
