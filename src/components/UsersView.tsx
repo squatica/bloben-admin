@@ -1,10 +1,5 @@
+import { Alert } from 'bloben-components';
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Button,
   Checkbox,
   Menu,
@@ -19,7 +14,7 @@ import {
   Tr,
   useToast,
 } from '@chakra-ui/react';
-import { GetUsersResponse } from '../bloben-interface/admin/admin';
+import { GetUsersResponse } from 'bloben-interface';
 import AdminUsersApi from '../api/adminUsers.api';
 import React, { useState } from 'react';
 
@@ -136,6 +131,7 @@ const UsersView = (props: UsersViewProps) => {
     handleClose();
   };
 
+  // @ts-ignore
   return (
     <Table variant="simple">
       <Thead>
@@ -149,38 +145,14 @@ const UsersView = (props: UsersViewProps) => {
       <Tbody>{renderedUsers}</Tbody>
 
       {selectedUser ? (
-        <AlertDialog
+        <Alert
           isOpen={selectedUser?.username !== undefined}
           onClose={handleClose}
-          // @ts-ignore
-          leastDestructiveRef={undefined}
-          isCentered={true}
-        >
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Delete user
-              </AlertDialogHeader>
-              <AlertDialogBody>
-                Do you want to delete user {selectedUser.username}?
-              </AlertDialogBody>
-
-              <AlertDialogFooter>
-                <Button _focus={{ boxShadow: 'none' }} onClick={handleClose}>
-                  Cancel
-                </Button>
-                <Button
-                  _focus={{ boxShadow: 'none' }}
-                  colorScheme="red"
-                  onClick={handleDelete}
-                  ml={3}
-                >
-                  Delete
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
+          header={'Delete user'}
+          body={`Do you want to delete user ${selectedUser.username}?`}
+          onSubmit={handleDelete}
+          submitText={'Delete'}
+        />
       ) : null}
     </Table>
   );

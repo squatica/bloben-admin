@@ -6,4 +6,11 @@ export default defineConfig({
   server: {
     port: 4103,
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "./node_modules/bloben-components/styles/colors.scss";`,
+      },
+    },
+  },
 });

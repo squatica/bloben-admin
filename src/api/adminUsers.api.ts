@@ -1,10 +1,8 @@
+import { AdminUpdateUserRequest, GetUsersResponse } from 'bloben-interface';
 import { AxiosResponse } from 'axios';
 
 import { APP_API_VERSION_1 } from '../data/constants';
-import {
-  AdminUpdateUserRequest,
-  GetUsersResponse,
-} from '../bloben-interface/admin/admin';
+
 import { CommonResponse } from '../data/interface';
 import Axios from '../lib/Axios';
 

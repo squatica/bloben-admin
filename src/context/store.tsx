@@ -1,4 +1,5 @@
-import { GetAdminAccountResponse } from '../bloben-interface/admin/admin';
+import { BlobenComponentsProvider } from 'bloben-components';
+import { GetAdminAccountResponse } from 'bloben-interface';
 import React, { createContext, useReducer } from 'react';
 import Reducer from './reducer';
 
@@ -21,7 +22,11 @@ const StoreProvider = ({ children }: any) => {
   const [store, dispatch] = useReducer(Reducer, initialContext);
 
   return (
-    <Context.Provider value={[store, dispatch]}>{children}</Context.Provider>
+    <Context.Provider value={[store, dispatch]}>
+      <BlobenComponentsProvider isMobile={store.isMobile} isDark={store.isDark}>
+        {children}
+      </BlobenComponentsProvider>
+    </Context.Provider>
   );
 };
 

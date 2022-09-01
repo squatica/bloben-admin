@@ -3,26 +3,34 @@ import {
   Button,
   Checkbox,
   Flex,
-  FormControl,
-  FormLabel,
-  Input,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Text,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   useToast,
 } from '@chakra-ui/react';
 import { CommonResponse } from '../data/interface';
-import { LOCATION_PROVIDER } from '../bloben-interface/enums';
+import { LOCATION_PROVIDER } from '../enums';
+import { Separator, SettingsRow } from 'bloben-components';
 import React, { useEffect, useState } from 'react';
-import Separator from '../components/Separator';
 import ServerSettingsApi from '../api/serverSettings.api';
+
+const menuStyle: any = {
+  width: '100%',
+  justifyContent: 'flex-start',
+  textAlign: 'left',
+};
 
 const ServerSettingsPage = () => {
   const toast = useToast();
 
   const [serverSettings, setServerSettings] = useState<any>({});
+  const [emailCounter, setEmailCounter] = useState<number>(0);
 
   const getServerSettings = async () => {
     const response = await ServerSettingsApi.get();
@@ -31,6 +39,10 @@ const ServerSettingsPage = () => {
       setServerSettings(response.data);
     }
   };
+
+  useEffect(() => {
+    setEmailCounter(serverSettings.emailCounter);
+  }, [serverSettings.emailCounter]);
 
   useEffect(() => {
     getServerSettings();
@@ -80,11 +92,18 @@ const ServerSettingsPage = () => {
     }
   };
 
-  const handleChangeEmailCounter = async (e: any) => {
+  const handleChangeEmailCounter = (value: string) => {
+    setEmailCounter(parseInt(value));
+  };
+
+  const handleSubmitEmailCounter = async () => {
+    if (emailCounter === serverSettings.emailCounter) {
+      return;
+    }
     try {
       const response: AxiosResponse<CommonResponse> =
         await ServerSettingsApi.patch({
-          emailCounter: e.target.value,
+          emailCounter: emailCounter,
         });
 
       if (response.status === 200) {
@@ -103,34 +122,41 @@ const ServerSettingsPage = () => {
   };
 
   return (
-    <Flex direction={'column'} padding={24} maxWidth={'50%'}>
+    <Flex direction={'column'} padding={24}>
       <Separator height={24} />
       <Flex direction="column">
-        <Checkbox
-          isChecked={serverSettings.checkNewVersion}
-          onChange={handleChangeCheckNewVersion}
-        >
-          Check updates
-        </Checkbox>
-        <Separator height={8} />
-        <Text>
-          Your server will check site bloben.com/version.txt for notification
-          about updates in regular intervals
-        </Text>
+        <SettingsRow title={'Check updates (bloben.com/version.txt)'}>
+          <Checkbox
+            isChecked={serverSettings.checkNewVersion}
+            onChange={handleChangeCheckNewVersion}
+            size={'lg'}
+          ></Checkbox>
+        </SettingsRow>
       </Flex>
-      <Separator height={24} />
-      <FormControl id="emailCounter" size="2xl">
-        <FormLabel size="2xl">Email daily limit</FormLabel>
-        <Input
-          size="lg"
-          name={'emailCounter'}
-          value={serverSettings.emailCounter}
-          onChange={(e: any) => handleChangeEmailCounter(e)}
-        />
-      </FormControl>
-      <Separator height={18} />
-      <FormControl id="locationProvider" size="2xl">
-        <FormLabel size="2xl">Location provider</FormLabel>
+      <Separator height={8} />
+      <SettingsRow title={'Email daily limit'}>
+        <NumberInput
+          style={menuStyle}
+          defaultValue={emailCounter}
+          value={emailCounter}
+          max={500}
+          min={0}
+          maxWidth={40}
+          keepWithinRange={true}
+          size={'lg'}
+          clampValueOnBlur={false}
+          onChange={handleChangeEmailCounter}
+          onBlur={handleSubmitEmailCounter}
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </SettingsRow>
+      <Separator height={8} />
+      <SettingsRow title={'Location provider'}>
         <Menu>
           <MenuButton as={Button}>{serverSettings.locationProvider}</MenuButton>
           <MenuList>
@@ -150,7 +176,7 @@ const ServerSettingsPage = () => {
             </MenuItem>
           </MenuList>
         </Menu>
-      </FormControl>
+      </SettingsRow>
     </Flex>
   );
 };

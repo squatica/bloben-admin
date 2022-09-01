@@ -9,8 +9,8 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import { Heading } from '@chakra-ui/react';
+import { Separator } from 'bloben-components';
 import React, { useState } from 'react';
-import Separator from './Separator';
 
 interface LoginViewProps {
   username: string;
