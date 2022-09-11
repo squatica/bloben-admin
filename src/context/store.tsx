@@ -6,13 +6,13 @@ import Reducer from './reducer';
 // @ts-ignore
 export const Context: any = createContext();
 
-interface InitialContext {
+export interface StoreContext {
   isLogged: boolean;
   version: string | null;
   user: GetAdminAccountResponse | null;
 }
 
-const initialContext: InitialContext = {
+const initialContext: StoreContext = {
   isLogged: false,
   version: null,
   user: null,

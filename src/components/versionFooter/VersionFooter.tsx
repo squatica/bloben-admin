@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 
 import './VersionFooter.css';
-import { Context } from '../../context/store';
+import { Context, StoreContext } from '../../context/store';
 
 const VersionFooter = () => {
-  const [store] = useContext(Context);
+  const [store]: [StoreContext] = useContext(Context);
 
   const { version } = store;
 

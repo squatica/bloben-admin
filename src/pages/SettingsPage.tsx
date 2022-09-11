@@ -6,7 +6,7 @@ import {
   createToastError,
 } from 'bloben-components';
 import { Button, Flex, useToast } from '@chakra-ui/react';
-import { Context } from '../context/store';
+import { Context, StoreContext } from '../context/store';
 import AdminApi from '../api/admin.api';
 import AdminTwoFactorApi from '../api/adminTwoFactor.api';
 import ChangePassword from '../components/changePassword/ChangePassword';
@@ -20,7 +20,7 @@ const menuStyle: any = {
 };
 
 const SettingsPage = () => {
-  const [store, dispatch] = useContext(Context);
+  const [store, dispatch]: [StoreContext, any] = useContext(Context);
   const toast = useToast();
 
   const setContext = (type: string, payload: any) => {

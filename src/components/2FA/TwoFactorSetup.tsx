@@ -7,7 +7,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { ChakraModal, PrimaryButton, Separator } from 'bloben-components';
-import { Context } from '../../context/store';
+import { Context, StoreContext } from '../../context/store';
 import { authenticator } from 'otplib';
 import Admin2FAApi from '../../api/adminTwoFactor.api';
 import AdminApi from '../../api/admin.api';
@@ -19,7 +19,7 @@ interface TwoFactorSetupProps {
 }
 const TwoFactorSetup = (props: TwoFactorSetupProps) => {
   const toast = useToast();
-  const [store, dispatch] = useContext(Context);
+  const [store, dispatch]: [StoreContext, any] = useContext(Context);
 
   const setContext = (type: string, payload: any) => {
     dispatch({ type, payload });
