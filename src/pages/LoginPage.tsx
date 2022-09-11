@@ -1,35 +1,30 @@
 import { AxiosResponse } from 'axios';
-import { Context } from '../context/store';
-import { LoginResponse } from '../bloben-interface/user/user';
+import { Context, StoreContext } from '../context/store';
+import { LoginComponent, createToastError } from 'bloben-components';
+import { LoginResponse } from 'bloben-interface';
 import { getHostname } from '../utils/common';
 import { useToast } from '@chakra-ui/react';
 import AdminApi from '../api/admin.api';
-import LoginView from '../components/LoginView';
 import React, { useContext, useState } from 'react';
-import TwoFactorLogin from '../components/2FA/TwoFactorLogin';
+import admin2FAApi from '../api/adminTwoFactor.api';
 
 const LoginPage = () => {
   const toast = useToast();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [twoFactorVisible, setTwoFactorVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [, dispatch] = useContext(Context);
+  const [, dispatch]: [StoreContext, any] = useContext(Context);
 
   const setContext = (type: string, payload: any) => {
     dispatch({ type, payload });
   };
 
-  const onChange = (e: any) => {
-    if (e.target.name === 'username') {
-      setUsername(e.target.value);
-    }
-    if (e.target.name === 'password') {
-      setPassword(e.target.value);
-    }
-  };
-  const handleLogin = async (): Promise<void> => {
+  const handleLogin = async (
+    username: string,
+    password: string
+  ): Promise<void> => {
+    setIsLoading(true);
     try {
       const apiUrl = `${getHostname()}/api`;
 
@@ -56,23 +51,46 @@ const LoginPage = () => {
         setTwoFactorVisible(true);
       }
     } catch (e: any) {
-      if (e.response?.data?.message) {
-        toast({
-          title: e.response?.data?.message,
-          status: 'error',
-        });
-      }
+      toast(createToastError(e));
     }
+
+    setIsLoading(false);
   };
 
-  return twoFactorVisible ? (
-    <TwoFactorLogin username={username} password={password} />
-  ) : (
-    <LoginView
-      username={username}
-      password={password}
-      handleLogin={handleLogin}
-      onChange={onChange}
+  const handleTwoFactorLogin = async (
+    username: string,
+    password: string,
+    otpCode: string
+  ) => {
+    setIsLoading(true);
+
+    try {
+      const response = await admin2FAApi.loginWith2FA({
+        username,
+        password,
+        otpCode,
+      });
+
+      if (response.data.isLogged && response.data.isTwoFactorEnabled) {
+        const userResponse = await AdminApi.getAdminAccount();
+
+        setContext('user', userResponse.data);
+
+        setContext('isLogged', true);
+      }
+    } catch (e: any) {
+      toast(createToastError(e));
+    }
+    setIsLoading(false);
+  };
+
+  return (
+    <LoginComponent
+      twoFactorVisible={twoFactorVisible}
+      onSubmitLogin={handleLogin}
+      isLoading={isLoading}
+      onSubmitTwoFactorLogin={handleTwoFactorLogin}
+      title={'Admin login'}
     />
   );
 };

@@ -5,9 +5,9 @@ import {
   AdminChangePasswordRequest,
   AdminLoginRequest,
   GetAdminAccountResponse,
-} from '../bloben-interface/admin/admin';
+  LoginResponse,
+} from 'bloben-interface';
 import { CommonResponse } from '../data/interface';
-import { LoginResponse } from '../bloben-interface/user/user';
 import Axios, { config } from '../lib/Axios';
 
 const V1_BASE_PATH = `/admin/${APP_API_VERSION_1}/auth`;

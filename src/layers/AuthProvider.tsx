@@ -1,4 +1,4 @@
-import { Context } from '../context/store';
+import { Context, StoreContext } from '../context/store';
 import { Flex, Spacer, useToast } from '@chakra-ui/react';
 import AdminApi from '../api/admin.api';
 import LayoutProvider from './LayoutLayer';
@@ -7,7 +7,7 @@ import React, { useContext, useEffect } from 'react';
 
 const AuthProvider = () => {
   const toast = useToast();
-  const [store, dispatch] = useContext(Context);
+  const [store, dispatch]: [StoreContext, any] = useContext(Context);
 
   const { isLogged } = store;
 
@@ -44,12 +44,7 @@ const AuthProvider = () => {
     try {
       await getVersion();
     } catch (e: any) {
-      if (e.response?.data?.message) {
-        toast({
-          title: e.response?.data?.message,
-          status: 'error',
-        });
-      }
+      return;
     }
   };
 
@@ -65,12 +60,7 @@ const AuthProvider = () => {
         setContext('user', response.data);
       }
     } catch (e: any) {
-      if (e.response?.data?.message) {
-        toast({
-          title: e.response?.data?.message,
-          status: 'error',
-        });
-      }
+      return;
     }
   };
 
