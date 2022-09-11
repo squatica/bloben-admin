@@ -2,7 +2,7 @@ import { APP_PATH } from '../data/enums';
 import { AxiosResponse } from 'axios';
 import { Button } from '@chakra-ui/react';
 import { CommonResponse } from '../data/interface';
-import { Context } from '../context/store';
+import { Context, StoreContext } from '../context/store';
 import { EvaIcons, Separator, SettingsButton } from 'bloben-components';
 import { useNavigate } from 'react-router';
 import AdminApi from '../api/admin.api';
@@ -25,7 +25,7 @@ const Navigation = () => {
     setCurrentPath(path);
     navigate(`/admin/${path}`);
   };
-  const [, dispatch] = useContext(Context);
+  const [, dispatch]: [StoreContext, any] = useContext(Context);
 
   const setContext = (type: string, payload: any) => {
     dispatch({ type, payload });

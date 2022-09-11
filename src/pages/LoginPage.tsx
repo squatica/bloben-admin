@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Context } from '../context/store';
+import { Context, StoreContext } from '../context/store';
 import { LoginComponent, createToastError } from 'bloben-components';
 import { LoginResponse } from 'bloben-interface';
 import { getHostname } from '../utils/common';
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [twoFactorVisible, setTwoFactorVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [, dispatch] = useContext(Context);
+  const [, dispatch]: [StoreContext, any] = useContext(Context);
 
   const setContext = (type: string, payload: any) => {
     dispatch({ type, payload });
