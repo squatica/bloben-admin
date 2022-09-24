@@ -8,6 +8,7 @@ import UsersPage from '../pages/UsersPage';
 const RouterProvider = () => {
   return (
     <Routes>
+      <Route path={'/admin'} element={<UsersPage />} />
       <Route path={'/admin/logs'} element={<LogsPage />} />
       <Route path={'/admin/users'} element={<UsersPage />} />
       <Route path={'/admin/settings'} element={<SettingsPage />} />
