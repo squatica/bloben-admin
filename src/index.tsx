@@ -1,5 +1,9 @@
 import './index.css';
-import { ChakraProvider } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  ColorModeProvider,
+  ColorModeScript,
+} from '@chakra-ui/react';
 import AuthProvider from './layers/AuthProvider';
 import BrowserProvider from './layers/BrowserProvider';
 import React from 'react';
@@ -11,12 +15,15 @@ window.env = {};
 
 ReactDOM.render(
   <React.StrictMode>
+    <ColorModeScript initialColorMode={'light'} />
     <ChakraProvider>
-      <StoreProvider>
-        <BrowserProvider>
-          <AuthProvider />
-        </BrowserProvider>
-      </StoreProvider>
+      <ColorModeProvider options={{ initialColorMode: 'light' }}>
+        <StoreProvider>
+          <BrowserProvider>
+            <AuthProvider />
+          </BrowserProvider>
+        </StoreProvider>
+      </ColorModeProvider>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
