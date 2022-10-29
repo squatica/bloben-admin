@@ -1,4 +1,4 @@
-import { Alert } from 'bloben-components';
+import { Alert, ChakraModal } from 'bloben-components';
 import {
   Button,
   Checkbox,
@@ -15,15 +15,20 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { GetUsersResponse } from 'bloben-interface';
+import { ROLE } from 'bloben-interface/enums';
 import AdminUsersApi from '../api/adminUsers.api';
+import Password from './userEdit/Password';
 import React, { useState } from 'react';
+import Username from './userEdit/Username';
 
 const renderUsers = (
   users: GetUsersResponse[],
   handleEnabledStatusChange: any,
   handleEmailsAllowedChange: any,
   handleChangeRole: any,
-  deleteUser: any
+  deleteUser: any,
+  renameUser: any,
+  changeUserPassword: any
 ) => {
   return users
     ?.sort((a, b) => {
@@ -35,15 +40,15 @@ const renderUsers = (
           <Td>{user.username}</Td>
           <Td>
             <Menu>
-              <MenuButton as={Button} disabled={user.role === 'ADMIN'}>
+              <MenuButton as={Button} disabled={user.role === ROLE.ADMIN}>
                 {user.role}
               </MenuButton>
               <MenuList>
-                <MenuItem onClick={() => handleChangeRole(user, 'DEMO')}>
-                  {'DEMO'}
+                <MenuItem onClick={() => handleChangeRole(user, ROLE.DEMO)}>
+                  {ROLE.DEMO}
                 </MenuItem>
-                <MenuItem onClick={() => handleChangeRole(user, 'USER')}>
-                  {'USER'}
+                <MenuItem onClick={() => handleChangeRole(user, ROLE.USER)}>
+                  {ROLE.USER}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -52,7 +57,7 @@ const renderUsers = (
             <Checkbox
               onChange={() => handleEnabledStatusChange(user)}
               isChecked={user.isEnabled}
-              disabled={user.role === 'ADMIN'}
+              disabled={user.role === ROLE.ADMIN}
             />
             {user.isEnabled}
           </Td>
@@ -60,18 +65,31 @@ const renderUsers = (
             <Checkbox
               onChange={() => handleEmailsAllowedChange(user)}
               isChecked={user.emailsAllowed}
-              disabled={user.role === 'ADMIN' || user.role === 'DEMO'}
+              disabled={user.role === ROLE.ADMIN || user.role === ROLE.DEMO}
             />
             {user.emailsAllowed}
           </Td>
           <Td>
-            <Button
-              onClick={() => deleteUser(user)}
-              disabled={user.role === 'ADMIN'}
-              colorScheme={'red'}
-            >
-              Delete
-            </Button>
+            <Menu>
+              <MenuButton as={Button} disabled={user.role === ROLE.ADMIN}>
+                More
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => renameUser(user)}>Rename</MenuItem>
+                <MenuItem
+                  onClick={() => changeUserPassword(user)}
+                  disabled={user.role === ROLE.ADMIN}
+                >
+                  Change password
+                </MenuItem>
+                <MenuItem
+                  onClick={() => deleteUser(user)}
+                  disabled={user.role === ROLE.ADMIN}
+                >
+                  Delete
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </Td>
         </Tr>
       );
@@ -88,20 +106,36 @@ interface UsersViewProps {
 const UsersView = (props: UsersViewProps) => {
   const toast = useToast();
 
+  const [renameModalVisible, setRenameModalVisible] = useState(false);
+  const [passwordModalVisible, setPasswordModalVisible] = useState(false);
+
   const [selectedUser, selectUser] = useState<null | GetUsersResponse>(null);
   const {
     users,
     handleEnabledStatusChange,
     handleEmailsAllowedChange,
     handleChangeRole,
+    getUsers,
   } = props;
+
+  const renameUser = (user: GetUsersResponse) => {
+    selectUser(user);
+    setRenameModalVisible(true);
+  };
+
+  const changeUserPassword = (user: GetUsersResponse) => {
+    selectUser(user);
+    setPasswordModalVisible(true);
+  };
 
   const renderedUsers: any = renderUsers(
     users,
     handleEnabledStatusChange,
     handleEmailsAllowedChange,
     handleChangeRole,
-    selectUser
+    selectUser,
+    renameUser,
+    changeUserPassword
   );
 
   const handleClose = () => selectUser(null);
@@ -153,6 +187,46 @@ const UsersView = (props: UsersViewProps) => {
           onSubmit={handleDelete}
           submitText={'Delete'}
         />
+      ) : null}
+
+      {selectedUser && renameModalVisible ? (
+        <ChakraModal
+          isOpen={renameModalVisible}
+          handleClose={() => {
+            handleClose();
+            setRenameModalVisible(false);
+          }}
+          title={'Rename user'}
+        >
+          <Username
+            user={selectedUser}
+            getUsers={getUsers}
+            handleClose={() => {
+              handleClose();
+              setRenameModalVisible(false);
+            }}
+          />
+        </ChakraModal>
+      ) : null}
+
+      {selectedUser && passwordModalVisible ? (
+        <ChakraModal
+          isOpen={passwordModalVisible}
+          handleClose={() => {
+            handleClose();
+            setPasswordModalVisible(false);
+          }}
+          title={"Change user's password"}
+        >
+          <Password
+            user={selectedUser}
+            getUsers={getUsers}
+            handleClose={() => {
+              handleClose();
+              setPasswordModalVisible(false);
+            }}
+          />
+        </ChakraModal>
       ) : null}
     </Table>
   );
