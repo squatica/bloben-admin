@@ -91,6 +91,9 @@ const UsersPage = () => {
 
       setIsModalOpen(false);
       getUsers();
+
+      setUsername('');
+      setPassword('');
     } catch (e: any) {
       if (e.response?.data?.message) {
         toast({
