@@ -4,7 +4,7 @@ import { Button } from '@chakra-ui/react';
 import { CommonResponse } from '../data/interface';
 import { Context, StoreContext } from '../context/store';
 import { EvaIcons, Separator, SettingsButton } from 'bloben-components';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import AdminApi from '../api/admin.api';
 import React, { useContext, useState } from 'react';
 
