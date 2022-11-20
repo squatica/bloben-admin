@@ -4,6 +4,7 @@ import { LoginComponent, createToastError } from 'bloben-components';
 import { LoginResponse } from 'bloben-interface';
 import { getHostname } from '../utils/common';
 import { useToast } from '@chakra-ui/react';
+import { v4 } from 'uuid';
 import AdminApi from '../api/admin.api';
 import React, { useContext, useState } from 'react';
 import admin2FAApi from '../api/adminTwoFactor.api';
@@ -29,6 +30,7 @@ const LoginPage = () => {
       const apiUrl = `${getHostname()}/api`;
 
       window.localStorage.setItem('apiUrl', apiUrl);
+      const browserID = window.localStorage.getItem('browserID');
 
       // @ts-ignore
       window.env.apiUrl = apiUrl;
@@ -38,6 +40,7 @@ const LoginPage = () => {
         {
           username,
           password,
+          browserID: browserID || null,
         }
       );
 
@@ -60,15 +63,24 @@ const LoginPage = () => {
   const handleTwoFactorLogin = async (
     username: string,
     password: string,
-    otpCode: string
+    otpCode: string,
+    trustBrowser: boolean
   ) => {
     setIsLoading(true);
 
     try {
+      let browserID: null | string = null;
+      if (trustBrowser) {
+        browserID = v4();
+
+        window.localStorage.setItem('browserID', browserID as string);
+      }
+
       const response = await admin2FAApi.loginWith2FA({
         username,
         password,
         otpCode,
+        browserID,
       });
 
       if (response.data.isLogged && response.data.isTwoFactorEnabled) {
@@ -91,6 +103,7 @@ const LoginPage = () => {
       isLoading={isLoading}
       onSubmitTwoFactorLogin={handleTwoFactorLogin}
       title={'Admin login'}
+      enableTrustBrowser={true}
     />
   );
 };
