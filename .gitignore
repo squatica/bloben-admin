@@ -3,3 +3,4 @@
 .idea/
 /build/
 .husky
+/modules/bloben-interface/dist/
